@@ -3,29 +3,30 @@
 
 
 // Goal for trial: simple scenario to get slim to work
-	// one population (100 individuals)
-	// one chromosome (1000 markers)
-	// export genotypes and pedigree info
+	// need to simulate one large population for many generations to establish genetic diversity (25,000 inds; 50,000 gens)
+	// one chromosome (10000 markers)
+	// export genotypes
 
 
-initialize() {
-	// setting up the genomic framework
-	defineConstant("L", 1000);						// number of loci
-	initializeMutationRate(0);						// assuming no mutation for simplicity
-	initializeMutationType("m1", 0.5, "f", 0.0)		// fixed mutation rate with h=0.5 and s=0; not sure I need this when I assume no mutation
-	initializeGenomicElementType("g1", m1, 1.0)		// creates a type of genomic element that uses the m1 mutation type with weight 1
+initialize() {										// setting up the genomic framework
+	defineConstant("L", 10000);						// number of loci
+	initializeMutationRate(1e-8);					// not sure what to pick here yet
+	initializeMutationType("m1", 0.5, "f", 0.0);	// fixed mutation rate with h=0.5 (dominance) and s=0 (selection)
+	initializeGenomicElementType("g1", m1, 1.0);	// creates a type of genomic element that uses the m1 mutation type with weight 1
 	initializeGenomicElement(g1, 0, L-1);			// creates the actual chromosome with L number of loci
 	initializeRecombinationRate(1e-8);				// this value seems to be what everyone else uses; need to research
-
-	// other specifications
-	initializeSLiMOptions(keepPedigrees=T);			// this turns on pedigree tracking
 }
 
 
 1 {													// generation 1
-	sim.addSubpop("p1", 100);						// one subpop with 100 inds
+	sim.addSubpop("p1", 25000);						// set population size to 25,000
 }
 
+50000 late() {										// at the end of generation 50,000
+	g=p1.individuals;								// defining which individuals will output in next step
+	g.outputVCF(filePath="/project/evolgen/jjahner/sauger_sims/slim_trials/trial00_out.vcf", simplifyNucleotides=T);
+	sim.simulationFinished();
+}
 
 
 
