@@ -10,7 +10,7 @@
 
 initialize() {										// setting up the genomic framework
 	defineConstant("L", 10000);						// number of loci
-	initializeMutationRate(1e-8);					// not sure what to pick here yet
+	initializeMutationRate(5.97e-9);					// not sure what to pick here yet
 	initializeMutationType("m1", 0.5, "f", 0.0);	// fixed mutation rate with h=0.5 (dominance) and s=0 (selection)
 	initializeGenomicElementType("g1", m1, 1.0);	// creates a type of genomic element that uses the m1 mutation type with weight 1
 	initializeGenomicElement(g1, 0, L-1);			// creates the actual chromosome with L number of loci
@@ -18,7 +18,7 @@ initialize() {										// setting up the genomic framework
 }
 
 
-1 {													// generation 1
+1 early () {													// generation 1
 	sim.addSubpop("p1", 25000);						// set population size to 25,000
 }
 
