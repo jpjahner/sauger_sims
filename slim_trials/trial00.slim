@@ -24,7 +24,7 @@ initialize() {										// setting up the genomic framework
 
 50000 late() {										// at the end of generation 50,000
 	g=p1.individuals;								// defining which individuals will output in next step
-	g.outputVCF(filePath="/project/evolgen/jjahner/sauger_sims/slim_trials/trial00_out.vcf", simplifyNucleotides=T);
+	g.genomes.outputVCF(filePath="/project/evolgen/jjahner/sauger_sims/slim_trials/trial00_out.vcf", simplifyNucleotides=T);
 	sim.simulationFinished();
 }
 
