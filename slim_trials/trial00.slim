@@ -3,14 +3,14 @@
 
 
 // Goal for trial: simple scenario to get slim to work
-	// need to simulate one large population for many generations to establish genetic diversity (25,000 inds; 50,000 gens)
-	// one chromosome (10000 markers)
+	// need to simulate one large population for many generations to establish genetic diversity (25,000 inds; 100,000 gens)
+	// one chromosome (100,000 markers)
 	// export genotypes
 
 
 initialize() {										// setting up the genomic framework
-	defineConstant("L", 10000);						// number of loci
-	initializeMutationRate(5.97e-9);					// not sure what to pick here yet
+	defineConstant("L", 100000);					// number of loci
+	initializeMutationRate(1e-8);					// not sure what to pick here yet
 	initializeMutationType("m1", 0.5, "f", 0.0);	// fixed mutation rate with h=0.5 (dominance) and s=0 (selection)
 	initializeGenomicElementType("g1", m1, 1.0);	// creates a type of genomic element that uses the m1 mutation type with weight 1
 	initializeGenomicElement(g1, 0, L-1);			// creates the actual chromosome with L number of loci
@@ -18,13 +18,13 @@ initialize() {										// setting up the genomic framework
 }
 
 
-1 early () {													// generation 1
+1 early () {										// generation 1
 	sim.addSubpop("p1", 25000);						// set population size to 25,000
 }
 
-50000 late() {										// at the end of generation 50,000
+100000 late() {										// at the end of generation 100,000
 	g=p1.individuals;								// defining which individuals will output in next step
-	g.genomes.outputVCF(filePath="/project/evolgen/jjahner/sauger_sims/slim_trials/trial00_out.vcf", simplifyNucleotides=T);
+	g.genomes.outputVCF(filePath="/project/evolgen/jjahner/sauger_sims/slim_trials/slim_out.vcf", simplifyNucleotides=T);
 	sim.simulationFinished();
 }
 
