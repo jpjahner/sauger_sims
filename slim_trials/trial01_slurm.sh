@@ -9,7 +9,7 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --account=evolgen
 #SBATCH --time=0-12:00:00
-#SBATCH --mem=4G
+#SBATCH --mem=16G
 #SBATCH -o stdout
 #SBATCH -e stderr
 

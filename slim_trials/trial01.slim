@@ -28,6 +28,16 @@ initialize() {										// setting up the genomic framework
 	sim.addSubpop("p1", 25000);						// set population size to 25,000
 }
 
+10000 late () { print("gen 10,0000 complete"); }
+20000 late () { print("gen 20,0000 complete"); }
+30000 late () { print("gen 30,0000 complete"); }
+40000 late () { print("gen 40,0000 complete"); }
+50000 late () { print("gen 50,0000 complete"); }
+60000 late () { print("gen 60,0000 complete"); }
+70000 late () { print("gen 70,0000 complete"); }
+80000 late () { print("gen 80,0000 complete"); }
+90000 late () { print("gen 90,0000 complete"); }
+
 100000 late() {										// at the end of generation 100,000
 	g=p1.individuals;								// defining which individuals will output in next step
 	g.genomes.outputVCF(filePath="/project/evolgen/jjahner/sauger_sims/slim_trials/slim_out.vcf", simplifyNucleotides=T);
