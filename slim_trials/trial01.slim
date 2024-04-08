@@ -1,0 +1,39 @@
+// sauger sims trial 01
+	// JPJ 4/8/24
+
+
+// Goal for trial: creating a more complex genomic architecture
+	// need to simulate one large population for many generations to establish genetic diversity (25,000 inds; 100,000 gens)
+	// 24 chromosomes (36MB each); roughly based on the yellow perch genome (https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_004354835.1/)
+	// export genotypes
+
+
+initialize() {										// setting up the genomic framework
+	defineConstant("L", 8.64e8);					// number of loci (24 chromosomes x 36Mb)
+	initializeMutationRate(1e-8);					// not sure what to pick here yet
+	initializeMutationType("m1", 0.5, "f", 0.0);	// fixed mutation rate with h=0.5 (dominance) and s=0 (selection)
+	initializeGenomicElementType("g1", m1, 1.0);	// creates a type of genomic element that uses the m1 mutation type with weight 1
+	initializeGenomicElement(g1, 0, L-1);			// creates one genomic element with L number of loci
+	
+	// breaking genomic element into chromosomes
+		// a recombination rate of 0.5 creates a chromosome breakpoint
+		// making breaks every 36Mb
+	rates = (1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8);
+	ends = (35999999, 3.6e7, 71999999, 7.2e7, 107999999, 1.08e8, 143999999, 1.44e8, 179999999, 1.8e8, 215999999, 2.16e8, 251999999, 2.52e8, 287999999, 2.88e8, 323999999, 3.24e8, 359999999, 3.6e8, 395999999, 3.96e8, 431999999, 4.32e8, 467999999, 4.68e8, 503999999, 5.04e8, 539999999, 5.4e8, 575999999, 5.76e8, 611999999, 6.12e8, 647999999, 6.48e8, 683999999, 6.84e8, 719999999, 7.2e8, 755999999, 7.56e8, 791999999, 7.92e8, 827999999, 8.28e8, 863999999);
+	initializeRecombinationRate(rates, ends);
+}
+
+
+1 early () {										// generation 1
+	sim.addSubpop("p1", 25000);						// set population size to 25,000
+}
+
+100000 late() {										// at the end of generation 100,000
+	g=p1.individuals;								// defining which individuals will output in next step
+	g.genomes.outputVCF(filePath="/project/evolgen/jjahner/sauger_sims/slim_trials/slim_out.vcf", simplifyNucleotides=T);
+	sim.simulationFinished();
+}
+
+
+
+
