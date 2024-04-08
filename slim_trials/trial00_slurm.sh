@@ -17,7 +17,7 @@ cd /project/evolgen/jjahner/sauger_sims/slim_trials/
 /project/evolgen/bin/slim -m -t trial00.slim
 
 module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
-vcftools --vcf slim_out.vcf -012
+vcftools --vcf slim_out.vcf --012
 rm slim_out.vcf
 rm out.012.indv
 rm out.012.pos
