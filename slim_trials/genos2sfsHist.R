@@ -5,7 +5,7 @@
 ## JPJ 4/7/24
 
 ## load in the data
-genos_ids <- read.delim("trial00_genos.txt", header=FALSE)
+genos_ids <- read.delim("trial01_genos.txt", header=FALSE)
 
 ## remove ids column
 genos <- genos_ids[,-1]
@@ -19,7 +19,7 @@ for (i in 1:dim(genos)[2]) {
 }
 
 ## folded sfs histogram
-pdf("trial00_sfsHist.pdf", height=5, width=5)
+pdf("trial01_sfsHist.pdf", height=5, width=5)
 par(mar=c(5,5,1,1))
 hist(afreqs, xlab="Folded allele frequency", ylab="Number of loci", main="", breaks=50, cex.lab=1.5, cex.axis=1.25, las=1)
 box(lwd=1)
