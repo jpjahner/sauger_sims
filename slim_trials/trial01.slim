@@ -3,7 +3,7 @@
 
 
 // Goal for trial: creating a more complex genomic architecture
-	// need to simulate one large population for many generations to establish genetic diversity (25,000 inds; 100,000 gens)
+	// need to simulate one large population for many generations to establish genetic diversity
 	// 24 chromosomes (36MB each); roughly based on the yellow perch genome (https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_004354835.1/)
 	// export genotypes
 
@@ -25,20 +25,20 @@ initialize() {										// setting up the genomic framework
 
 
 1 early () {										// generation 1
-	sim.addSubpop("p1", 25000);						// set population size to 25,000
+	sim.addSubpop("p1", 1000);						// set population size to 1,000
 }
 
-10000 late () { print("gen 10,0000 complete"); }
-20000 late () { print("gen 20,0000 complete"); }
-30000 late () { print("gen 30,0000 complete"); }
-40000 late () { print("gen 40,0000 complete"); }
-50000 late () { print("gen 50,0000 complete"); }
-60000 late () { print("gen 60,0000 complete"); }
-70000 late () { print("gen 70,0000 complete"); }
-80000 late () { print("gen 80,0000 complete"); }
-90000 late () { print("gen 90,0000 complete"); }
+10 late () { print("gen 10 complete"); }
+20 late () { print("gen 20 complete"); }
+30 late () { print("gen 30 complete"); }
+40 late () { print("gen 40 complete"); }
+50 late () { print("gen 50 complete"); }
+60 late () { print("gen 60 complete"); }
+70 late () { print("gen 70 complete"); }
+80 late () { print("gen 80 complete"); }
+90 late () { print("gen 90 complete"); }
 
-100000 late() {										// at the end of generation 100,000
+100 late() {										// at the end of generation 100
 	g=p1.individuals;								// defining which individuals will output in next step
 	g.genomes.outputVCF(filePath="/project/evolgen/jjahner/sauger_sims/slim_trials/slim_out.vcf", simplifyNucleotides=T);
 	sim.simulationFinished();
