@@ -78,6 +78,8 @@ foreach my $popN (@popNs){
     push @slurmdirectives, "#SBATCH --account=$account";
     push @slurmdirectives, "#SBATCH --time=$time";
     push @slurmdirectives, "#SBATCH --mem=$mem";
+    push @slurmdirectives, "#SBATCH -o "."$trial"."/stdout_"."popN_"."$popN"."_gen_"."$gen";
+    push @slurmdirectives, "#SBATCH -e "."$trial"."/stderr_"."popN_"."$popN"."_gen_"."$gen";
     push @slurmdirectives, "/project/evolgen/bin/slim -m -t "."$trial"."/popN_"."$popN"."_gen_"."$gen".".slim";
     push @slurmdirectives, "\n";
     my $slurm = join "\n", @slurmdirectives;
