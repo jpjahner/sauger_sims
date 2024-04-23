@@ -43,6 +43,7 @@ Rscript genos2sfsHist.R
 module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
 vcftools --vcf popN_500_gen_50000.vcf --freq2
 grep -v "CHROM" out.frq > out_noHead.frq    ## removes header
+Rscript sfs_beta_fit.R  ## currently need to hard code input file and maf 
 ```
 
 
