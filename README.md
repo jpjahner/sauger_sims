@@ -42,10 +42,28 @@ Rscript genos2sfsHist.R
 ```{bash}
 module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
 vcftools --vcf popN_500_gen_50000.vcf --freq2
+
 grep -v "CHROM" out.frq > out_noHead.frq    ## removes header
+module load r/4.2.2
 Rscript sfs_beta_fit.R  ## currently need to hard code input file and maf 
 ```
 
+
+
+
+
+## Parameterizing the SFS from Will's empirical data
+
+```{bash}
+module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
+vcftools --vcf sauger_0.5_0.01_nosex_filt.vcf --freq2 --out afreqs_0.5_0.01_nosex
+    ## After filtering, kept 576 out of 576 Individuals
+    ## After filtering, kept 12045 out of a possible 12045 Sites
+
+grep -v "CHROM" afreqs_0.5_0.01_nosex.frq > afreqs_0.5_0.01_nosex_noHead.frq    ## removes header
+module load r/4.2.2
+Rscript empirical_beta_fit.R
+```
 
 
 ## Acknowledgments
