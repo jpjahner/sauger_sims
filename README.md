@@ -54,6 +54,7 @@ Rscript sfs_beta_fit.R  ## currently need to hard code input file and maf
 
 ## Parameterizing the SFS from Will's empirical data
 
+### all individuals
 ```{bash}
 module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
 vcftools --vcf sauger_0.5_0.01_nosex_filt.vcf --freq2 --out afreqs_0.5_0.01_nosex
@@ -62,8 +63,66 @@ vcftools --vcf sauger_0.5_0.01_nosex_filt.vcf --freq2 --out afreqs_0.5_0.01_nose
 
 grep -v "CHROM" afreqs_0.5_0.01_nosex.frq > afreqs_0.5_0.01_nosex_noHead.frq    ## removes header
 module load r/4.2.2
-Rscript empirical_beta_fit.R
+Rscript empirical_beta_fit.R    ## change input/output file each time
 ```
+
+### only the downstream individuals
+```{bash}
+grep "Bighorn" sauger_emu_meta_groups.csv | cut -f 1 -d "," > downstream_inds.txt
+
+module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
+vcftools --vcf sauger_0.5_0.01_nosex_filt.vcf --keep downstream_inds.txt --freq2 --out afreqs_0.5_0.01_nosex_downstream
+    ## After filtering, kept 484 out of 576 Individuals
+    ## After filtering, kept 12045 out of a possible 12045 Sites
+
+grep -v "CHROM" afreqs_0.5_0.01_nosex_downstream.frq > afreqs_0.5_0.01_nosex_downstream_noHead.frq    ## removes header
+module load r/4.2.2
+Rscript empirical_beta_fit.R    ## change input/output file each time
+```
+
+### only the upstream individuals
+```{bash}
+grep "Wind\|Boysen" sauger_emu_meta_groups.csv | cut -f 1 -d "," > upstream_inds.txt
+
+module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
+vcftools --vcf sauger_0.5_0.01_nosex_filt.vcf --keep upstream_inds.txt --freq2 --out afreqs_0.5_0.01_nosex_upstream
+    ## After filtering, kept 92 out of 576 Individuals
+    ## After filtering, kept 12045 out of a possible 12045 Sites
+
+grep -v "CHROM" afreqs_0.5_0.01_nosex_upstream.frq > afreqs_0.5_0.01_nosex_upstream_noHead.frq    ## removes header
+module load r/4.2.2
+Rscript empirical_beta_fit.R    ## change input/output file each time
+```
+
+### only Wind River individuals
+```{bash}
+grep "Wind" sauger_emu_meta_groups.csv | cut -f 1 -d "," > wind_inds.txt
+
+module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
+vcftools --vcf sauger_0.5_0.01_nosex_filt.vcf --keep wind_inds.txt --freq2 --out afreqs_0.5_0.01_nosex_wind
+    ## After filtering, kept 61 out of 576 Individuals
+    ## After filtering, kept 12045 out of a possible 12045 Sites
+
+grep -v "CHROM" afreqs_0.5_0.01_nosex_wind.frq > afreqs_0.5_0.01_nosex_wind_noHead.frq    ## removes header
+module load r/4.2.2
+Rscript empirical_beta_fit.R    ## change input/output file each time
+```
+
+### only Boysen individuals
+```{bash}
+grep "Boysen" sauger_emu_meta_groups.csv | cut -f 1 -d "," > boysen_inds.txt
+
+module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
+vcftools --vcf sauger_0.5_0.01_nosex_filt.vcf --keep boysen_inds.txt --freq2 --out afreqs_0.5_0.01_nosex_boysen
+    ## After filtering, kept 31 out of 576 Individuals
+    ## After filtering, kept 12045 out of a possible 12045 Sites
+
+grep -v "CHROM" afreqs_0.5_0.01_nosex_boysen.frq > afreqs_0.5_0.01_nosex_boysen_noHead.frq    ## removes header
+module load r/4.2.2
+Rscript empirical_beta_fit.R    ## change input/output file each time
+```
+
+
 
 
 ## Acknowledgments
