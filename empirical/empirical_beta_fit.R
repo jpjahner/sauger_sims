@@ -9,7 +9,7 @@
 library(betafunctions)
 
 ## read in data
-freqs <- read.delim("afreqs_0.5_0.01_nosex_noHead.frq", header=FALSE)
+freqs <- read.delim("afreqs_0.5_0.01_nosex_upstream_noHead.frq", header=FALSE)
 
 
 ## fold the allele frequencies
@@ -34,7 +34,7 @@ maf_cut_folded <- subset(folded, maf_cut==1)
 beta_fit_maf_cut_folded <- Beta.4p.fit(maf_cut_folded[,1])
 
 ## plot SFS histogram with fitted beta
-pdf("beta_fit_0.5_0.01_nosex.pdf", height=5, width=5)
+pdf("beta_fit_0.5_0.01_nosex_upstream.pdf", height=5, width=5)
 par(mar=c(5,5,1,1))
 hist(maf_cut_folded[,1], breaks=100, xlab="Folded allele frequency", ylab="Number of loci", main="", cex.axis=1.25, cex.lab=1.5); box(lwd=1.5)
 par(new=TRUE)
