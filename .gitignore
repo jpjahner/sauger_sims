@@ -1,0 +1,7 @@
+## files not to track
+std*
+.DS_*
+.Rapp*
+*.vcf
+*.vcf.gz
+*genos.txt.gz
