@@ -30,6 +30,41 @@ perl slim_wrapper.pl
 
 ## Summarizing model outputs
 
+### Filter vcfs from wrapper output
+
+```{bash}
+module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
+vcftools --vcf popN_500_gen_50000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 81007 out of a possible 132382 Sites
+vcftools --vcf popN_500_gen_75000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 80121 out of a possible 131028 Sites
+vcftools --vcf popN_500_gen_100000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 79971 out of a possible 130372 Sites
+vcftools --vcf popN_500_gen_125000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 79805 out of a possible 131344 Sites
+vcftools --vcf popN_500_gen_150000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 80403 out of a possible 130854 Sites
+vcftools --vcf popN_500_gen_175000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 80062 out of a possible 131157 Sites
+vcftools --vcf popN_500_gen_200000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 79792 out of a possible 130326 Sites
+vcftools --vcf popN_1000_gen_50000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 157701 out of a possible 285083 Sites
+vcftools --vcf popN_1000_gen_75000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 158971 out of a possible 285716 Sites
+vcftools --vcf popN_1000_gen_100000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 158552 out of a possible 286077 Sites
+vcftools --vcf popN_1000_gen_125000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 159762 out of a possible 286599 Sites
+vcftools --vcf popN_1000_gen_150000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 157831 out of a possible 285643 Sites
+vcftools --vcf popN_1000_gen_175000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 158727 out of a possible 286264 Sites
+vcftools --vcf popN_1000_gen_200000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 158932 out of a possible 287205 Sites
+```
+
+
 ### Plot the folded site frequency spectrum
 
 ```{bash}
