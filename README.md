@@ -30,7 +30,7 @@ perl slim_wrapper.pl
 
 ## Summarizing model outputs
 
-### Filter vcfs from wrapper output
+### Filter vcfs from wrapper output (test 1)
 
 ```{bash}
 module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
@@ -64,6 +64,77 @@ vcftools --vcf popN_1000_gen_200000.vcf --keep ../inds_to_keep.txt --maf 0.01
     ## After filtering, kept 158932 out of a possible 287205 Sites
 ```
 
+### Filter vcfs from wrapper output (test 2)
+
+```{bash}
+module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
+vcftools --vcf popN_500_gen_500.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 48599 out of a possible 99608 Sites
+vcftools --vcf popN_500_gen_1000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 61372 out of a possible 112091 Sites
+vcftools --vcf popN_500_gen_5000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 79260 out of a possible 129896 Sites
+vcftools --vcf popN_500_gen_10000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 81252 out of a possible 132019 Sites
+vcftools --vcf popN_500_gen_15000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 79391 out of a possible 130174 Sites
+vcftools --vcf popN_500_gen_20000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 80098 out of a possible 130170 Sites
+vcftools --vcf popN_500_gen_25000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 79423 out of a possible 130523 Sites
+
+vcftools --vcf popN_1000_gen_500.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 71041 out of a possible 195674 Sites
+vcftools --vcf popN_1000_gen_1000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 95460 out of a possible 221657 Sites
+vcftools --vcf popN_1000_gen_5000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 149886 out of a possible 276898 Sites
+vcftools --vcf popN_1000_gen_10000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 160524 out of a possible 287302 Sites
+vcftools --vcf popN_1000_gen_15000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 160270 out of a possible 288478 Sites
+vcftools --vcf popN_1000_gen_20000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 157575 out of a possible 285901 Sites
+vcftools --vcf popN_1000_gen_25000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 159987 out of a possible 287682 Sites
+
+vcftools --vcf popN_1500_gen_500.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 87901 out of a possible 294265 Sites
+vcftools --vcf popN_1500_gen_1000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 123798 out of a possible 333010 Sites
+vcftools --vcf popN_1500_gen_5000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 208928 out of a possible 422531 Sites
+vcftools --vcf popN_1500_gen_10000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 231414 out of a possible 443424 Sites
+vcftools --vcf popN_1500_gen_15000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 236372 out of a possible 449325 Sites
+vcftools --vcf popN_1500_gen_20000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 237051 out of a possible 447251 Sites
+vcftools --vcf popN_1500_gen_25000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 239978 out of a possible 450085 Sites
+
+vcftools --vcf popN_2000_gen_500.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 99257 out of a possible 390808 Sites
+vcftools --vcf popN_2000_gen_1000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 142385 out of a possible 440307 Sites
+vcftools --vcf popN_2000_gen_5000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 257650 out of a possible 560766 Sites
+vcftools --vcf popN_2000_gen_10000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 299901 out of a possible 599994 Sites
+vcftools --vcf popN_2000_gen_15000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 312072 out of a possible 614229 Sites
+vcftools --vcf popN_2000_gen_20000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 317906 out of a possible 619359 Sites
+vcftools --vcf popN_2000_gen_25000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 316773 out of a possible 618723 Sites
+
+## sfs for one scenario
+vcftools --vcf popN_500_gen_500.vcf --freq2  --maf 0.01 --out popN_500_gen_500
+grep -v "CHROM" popN_500_gen_500.frq > popN_500_gen_500_noHead.frq    ## removes header
+module load r/4.2.2
+Rscript /project/evolgen/jjahner/sauger_sims/empirical/empirical_beta_fit.R
+```
+/project/evolgen/jjahner/sauger_sims/slim_trials/test2
 
 ### Plot the folded site frequency spectrum
 
