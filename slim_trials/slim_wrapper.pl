@@ -22,10 +22,10 @@ my $mem = '16G';
 ################################################
 
 ## population size
-my @popNs = ('2000');
+my @popNs = ('500', '1000', '1500', '2000');
 
 ## generations
-my @gens = ('20000', '25000');
+my @gens = ('500', '1000', '5000', '10000', '15000', '20000', '25000');
 
 ## trial name
 my $trial = 'test2';
@@ -47,7 +47,7 @@ foreach my $popN (@popNs){
     open (OUT, "> $trial"."/popN_"."$popN"."_gen_"."$gen".".slim");
     print OUT "initialize() {\n";
     print OUT "defineConstant(\"L\", 864000000);\n";
-    print OUT "initializeMutationRate(1e-8);\n";
+    print OUT "initializeMutationRate(5.97e-9);\n";   ## bergeron et al. 2023
     print OUT "initializeMutationType(\"m1\", 0.5, \"f\", 0.0);\n";
     print OUT "initializeGenomicElementType(\"g1\", m1, 1.0);\n";
     print OUT "initializeGenomicElement(g1, 0, L-1);\n";
