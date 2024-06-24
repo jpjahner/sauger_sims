@@ -28,7 +28,7 @@ my @popNs = ('500', '1000', '1500', '2000');
 my @gens = ('500', '1000', '5000', '10000', '15000', '20000', '25000');
 
 ## trial name
-my $trial = 'test2';
+my $trial = 'test3';
 
 ## create directory for trial output
 unless(-e '${trial}'){
