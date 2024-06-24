@@ -22,13 +22,13 @@ my $mem = '16G';
 ################################################
 
 ## population size
-my @popNs = ('500', '1000', '1500', '2000');
+my @popNs = ('100', '200', '300', '400', '500');
 
 ## generations
-my @gens = ('500', '1000', '5000', '10000', '15000', '20000', '25000');
+my @gens = ('1000', '2000', '3000', '4000', '5000');
 
 ## trial name
-my $trial = 'test3';
+my $trial = 'test4';
 
 ## create directory for trial output
 unless(-e '${trial}'){
