@@ -5,3 +5,6 @@ std*
 *.vcf
 *.vcf.gz
 *genos.txt.gz
+*slim.gz
+*frq.gz
+*.log
