@@ -322,6 +322,67 @@ Rscript /project/evolgen/jjahner/sauger_sims/empirical/empirical_beta_fit.R
 
 
 
+## Filter vcfs from wrapper output (test 5)
+```{bash}
+module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
+vcftools --vcf popN_125_250_gen_20000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 12153 out of a possible 18170 Sites
+vcftools --vcf popN_125_250_gen_40000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 12520 out of a possible 18490 Sites
+vcftools --vcf popN_125_250_gen_60000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 12309 out of a possible 18351 Sites
+vcftools --vcf popN_125_250_gen_80000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 12180 out of a possible 18176 Sites
+vcftools --vcf popN_125_250_gen_100000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 12205 out of a possible 18026 Sites
 
+vcftools --vcf popN_125_500_gen_20000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 12241 out of a possible 21418 Sites
+vcftools --vcf popN_125_500_gen_40000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 12236 out of a possible 21279 Sites
+vcftools --vcf popN_125_500_gen_60000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 12073 out of a possible 21151 Sites
+vcftools --vcf popN_125_500_gen_80000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11928 out of a possible 20911 Sites
+vcftools --vcf popN_125_500_gen_100000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11845 out of a possible 20807 Sites
+
+vcftools --vcf popN_125_750_gen_20000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11795 out of a possible 23725 Sites
+vcftools --vcf popN_125_750_gen_40000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11744 out of a possible 23514 Sites
+vcftools --vcf popN_125_750_gen_60000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11633 out of a possible 23245 Sites
+vcftools --vcf popN_125_750_gen_80000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11696 out of a possible 23485 Sites
+vcftools --vcf popN_125_750_gen_100000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11725 out of a possible 23602 Sites
+
+vcftools --vcf popN_125_1000_gen_20000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11753 out of a possible 26305 Sites
+vcftools --vcf popN_125_1000_gen_40000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11807 out of a possible 25999 Sites
+vcftools --vcf popN_125_1000_gen_60000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11906 out of a possible 26199 Sites
+vcftools --vcf popN_125_1000_gen_80000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11557 out of a possible 26124 Sites
+vcftools --vcf popN_125_1000_gen_100000.vcf --keep ../inds_to_keep.txt --maf 0.01
+    ## After filtering, kept 11709 out of a possible 26210 Sites
+
+vcftools --vcf popN_125_250_gen_20000.vcf --freq2 --maf 0.01 --out popN_125_250_gen_20000
+vcftools --vcf popN_125_500_gen_20000.vcf --freq2 --maf 0.01 --out popN_125_500_gen_20000
+vcftools --vcf popN_125_750_gen_20000.vcf --freq2 --maf 0.01 --out popN_125_750_gen_20000
+vcftools --vcf popN_125_1000_gen_20000.vcf --freq2 --maf 0.01 --out popN_125_1000_gen_20000
+
+grep -v "CHROM" popN_125_250_gen_20000.frq > popN_125_250_gen_20000_noHead.frq
+grep -v "CHROM" popN_125_500_gen_20000.frq > popN_125_500_gen_20000_noHead.frq
+grep -v "CHROM" popN_125_750_gen_20000.frq > popN_125_750_gen_20000_noHead.frq
+grep -v "CHROM" popN_125_1000_gen_20000.frq > popN_125_1000_gen_20000_noHead.frq
+
+module load arcc/1.0 gcc/12.2.0 r/4.2.2
+## change input/output each time
+Rscript /project/evolgen/jjahner/sauger_sims/empirical/empirical_beta_fit.R
+
+```
 
 
