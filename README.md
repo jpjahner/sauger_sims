@@ -11,7 +11,7 @@ Contact: Josh Jahner, jpjahner@gmail.com
 
 * [trial01.slim](slim_trials/trial01.slim): added in more realistic genome structure
 
-
+* switched to the perl wrapper after this
 
 ### Example launching a single model:
 
