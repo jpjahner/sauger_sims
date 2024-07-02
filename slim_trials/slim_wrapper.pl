@@ -25,13 +25,16 @@ my $mem = '16G';
 my @popNs = ('125');
 
 ## generations
-my @gens = ('20000','40000', '60000', '80000', '100000');
+my @gens = ('20000');
 
 ## gen2 population size
-my @popN_gen2 = ('250', '500', '750', '1000');
+my @popN_gen2 = ('5000');
+
+## joined population size
+my @popN_join = ('1000');
 
 ## trial name
-my $trial = 'test6';
+my $trial = 'test7';
 
 ## create directory for trial output
 unless(-e '${trial}'){
@@ -45,7 +48,8 @@ unless(-e '${trial}'){
 
 foreach my $popN (@popNs){
   foreach my $gen (@gens){
-	  my $gen2 = $gen + 1;
+	  my $gen2 = $gen + 1;  ## when subpopulations increase, split, and join (F1)
+	  my $gen3 = $gen + 2;  ## F2s (print)
   	foreach my $popN2 (@popN_gen2){
       ## create slim input file
       ### set up genomic background
@@ -59,6 +63,7 @@ foreach my $popN (@popNs){
       print OUT "rates = c(1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8, 0.5, 1e-8);\n";
       print OUT "ends = c(35999999, 36000000, 71999999, 72000000, 107999999, 108000000, 143999999, 144000000, 179999999, 180000000, 215999999, 216000000, 251999999, 252000000, 287999999, 288000000, 323999999, 324000000, 359999999, 360000000, 395999999, 396000000, 431999999, 432000000, 467999999, 468000000, 503999999, 504000000, 539999999, 540000000, 575999999, 576000000, 611999999, 612000000, 647999999, 648000000, 683999999, 684000000, 719999999, 720000000, 755999999, 756000000, 791999999, 792000000, 827999999, 828000000, 863999999);\n";
       print OUT "initializeRecombinationRate(rates, ends);\n";
+      print OUT "initializeSlimOptions(keepPedigrees=T);\n";
       print OUT "}\n";
       print OUT "\n";
     
@@ -68,15 +73,26 @@ foreach my $popN (@popNs){
       print OUT "}\n";
       print OUT "\n";
     
-      ### increase population size to $popN_gen2 during generation $gen + 1 ($gen2)
+      ### increase population size to $popN_gen2 during generation $gen + 1 ($gen2) and split
       print OUT "$gen2"." early() {\n";
       print OUT "p1.setSubpopulationSize("."$popN2".");\n";
+      print OUT "sim.addSubpopSplit(\"p2\", 200, p1);\n";
+      print OUT "sim.addSubpop(\"p3\", @popN_join);\n";
+      print OUT "p3.setMigrationRates(c(p1,p2), c(0.5,0.5));\n";
       print OUT "}\n";
       print OUT "\n";
-    
-      ### print output
+      
+      ### join subpopulations together at the end of $gen2 and kill other subpops
       print OUT "$gen2"." late() {\n";
-      print OUT "g=p1.individuals;\n";
+      print OUT "p3.setMigrationRates(c(p1,p2), c(0.0,0.0));\n";
+      print OUT "p1.setSubpopulationSize(0);\n";
+      print OUT "p2.setSubpopulationSize(0);\n";
+      print OUT "}\n";
+      print OUT "\n";
+          
+      ### print output
+      print OUT "$gen3"." late() {\n";
+      print OUT "g=p3.individuals;\n";
       print OUT "g.genomes.outputVCF(filePath=\""."$trial"."/popN_"."$popN"."_"."$popN2"."_gen_"."$gen"."\.vcf\", simplifyNucleotides=T);\n";
       print OUT "sim.simulationFinished();\n";
       print OUT "}\n";
