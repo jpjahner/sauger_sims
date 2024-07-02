@@ -21,7 +21,7 @@ hist(freqs[,5], breaks=100, xlab="Allele frequency", ylab="Number of loci", main
 par(new=TRUE)
 dbeta_seq_x <- seq(beta_fit$l, beta_fit$u, length=100)
 dbeta_seq_y <- dBeta.4P(seq(beta_fit$l, beta_fit$u, length=100), beta_fit$l, beta_fit$u, beta_fit$alpha, beta_fit$beta)
-plot(dbeta_seq_x[2:99], dbeta_seq_y[2:99], ylim=c(0,dbeta_seq_y[2]), type="l", col="red", lwd=2, xlab="", ylab="", axes=FALSE)
+plot(dbeta_seq_x[2:99], dbeta_seq_y[2:99], ylim=c(0,max(dbeta_seq_y)), type="l", col="red", lwd=2, xlab="", ylab="", axes=FALSE)
 mtext(bquote(alpha==.(round(beta_fit$alpha,3))), cex=1.25, adj=0.98, line=-1.25)
 mtext(bquote(beta==.(round(beta_fit$beta,3))), cex=1.25, adj=0.98, line=-2.4)
 dev.off()
