@@ -110,14 +110,16 @@ rownames(all_inds) <- all_inds_names
 
 ## sequoia
 library(sequoia)
-GetMaybeRel(all_inds)
+output <- GetMaybeRel(all_inds)
 
 
 
-
-
-
-
+## write out files
+write.table(output$MaybeTrio, file="sequoia_trios.txt", row.names=F, quote=F)
+write.table(output$MaybePar, file="sequoia_pars.txt", row.names=F, quote=F)
+write.table(f1h_parents, file="f1h_parents.txt", row.names=F, col.names=F, quote=F)
+write.table(f1w_parents, file="f1w_parents.txt", row.names=F, col.names=F, quote=F)
+write.table(f2_parents, file="f2_parents.txt", row.names=F, col.names=F, quote=F)
 
 
 
