@@ -52,8 +52,8 @@ foreach my $loci (@nloci){
     push @slurmdirectives, "#SBATCH --account=$account";
     push @slurmdirectives, "#SBATCH --time=$time";
     push @slurmdirectives, "#SBATCH --mem=$mem";
-    push @slurmdirectives, "#SBATCH -o "."stdout_"."$loci"."_"."$samp";
-    push @slurmdirectives, "#SBATCH -e "."stderr_"."$loci"."_"."$samp";
+    push @slurmdirectives, "#SBATCH -o "."$trial"."/stdout_"."$loci"."_"."$samp";
+    push @slurmdirectives, "#SBATCH -e "."$trial"/."stderr_"."$loci"."_"."$samp";
     push @slurmdirectives, "module load arcc/1.0 gcc/12.2.0 r/4.4.0";
     push @slurmdirectives, "cd /project/evolgen/jjahner/sauger_sims/r_sims/"."$trial";
     push @slurmdirectives, "Rscript ../sauger_cross_sim.R "."$loci"." "."$samp";
