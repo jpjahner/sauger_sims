@@ -7,13 +7,20 @@
 
 set.seed(17)
 
+
 ## set up starting parameters
-nloci <- 10000	      ## number of loci; fixed for all inds
+args <- commandArgs(TRUE)             ## brings in values from stdin
+nloci <- as.numeric(args[1])          ## number of loci
+f0w_samp_prop <- as.numeric(args[2])  ## proportion of F0 wild individuals included in 
+
+
+## fixed parameters
 f0_inds <- 1000       ## total number of inds in F0 matrix
 f0_cross_prop <- 0.2  ## proportion of f0 inds used to make hatchery crosses
 f1h_inds <- 1000      ## total number of inds in F1 hatchery matrix
 f1w_inds <- 1000      ## total number of inds in F1 wild matrix
 f2_inds <- 1000       ## total number of inds in F2 matrix
+
 
 
 ## set up f0 matrix (NOTE!!!: this matrix is transposed relative to the others)
@@ -97,7 +104,7 @@ for (r in 1:f1w_inds) {
 }
 
 
-## join all individuals together
+## join all individuals together 
 all_inds <- rbind(t(f0_mat), f1_joined, f2_mat)
 all_inds_names <- matrix(NA, dim(all_inds)[1], 1)
 for (t in 1:dim(all_inds)[1]) {
@@ -108,21 +115,27 @@ for (t in 1:dim(all_inds)[1]) {
 }
 rownames(all_inds) <- all_inds_names
 
+
+## remove a proportion of f0w individuals (based on f0w_samp_prop)
+
+if (f0w_samp_prop!=1) {
+	f0w_to_remove <- sample((cross_inds+1):f0_inds, length((cross_inds+1):f0_inds)-(length((cross_inds+1):f0_inds)*f0w_samp_prop), replace=FALSE)
+	final_inds <- all_inds[-c(f0w_to_remove),]
+}
+else if (f0w_samp_prop==1) { final_inds <- all_inds }
+
+
 ## sequoia
 library(sequoia)
-output <- GetMaybeRel(all_inds)
-
+output <- GetMaybeRel(final_inds)
 
 
 ## write out files
-write.table(output$MaybeTrio, file="sequoia_trios.txt", row.names=F, quote=F)
-write.table(output$MaybePar, file="sequoia_pars.txt", row.names=F, quote=F)
-write.table(f1h_parents, file="f1h_parents.txt", row.names=F, col.names=F, quote=F)
-write.table(f1w_parents, file="f1w_parents.txt", row.names=F, col.names=F, quote=F)
-write.table(f2_parents, file="f2_parents.txt", row.names=F, col.names=F, quote=F)
-
-
-
+write.table(output$MaybeTrio, file=paste0("trios_", nloci, "_", f0w_samp_prop, ".txt"), row.names=F, quote=F)
+write.table(output$MaybePar, file=paste0("pars_", nloci, "_", f0w_samp_prop, ".txt"), row.names=F, quote=F)
+write.table(f1h_parents, file=paste0("f1h_parents_", nloci, "_", f0w_samp_prop, ".txt"), row.names=F, col.names=F, quote=F)
+write.table(f1w_parents, file=paste0("f1w_parents_", nloci, "_", f0w_samp_prop, ".txt"), row.names=F, col.names=F, quote=F)
+write.table(f2_parents, file=paste0("f2_parents_", nloci, "_", f0w_samp_prop, ".txt"), row.names=F, col.names=F, quote=F)
 
 
 
