@@ -59,8 +59,8 @@ foreach my $loci (@nloci){
     push @slurmdirectives, "Rscript ../sauger_cross_sim.R "."$loci"." "."$samp";
     push @slurmdirectives, "\n";
     my $slurm = join "\n", @slurmdirectives;
-    print $slurm;
-    #runserialjob($slurm); ## launch the slurm job (see subroutine below)
+    #print $slurm;
+    runserialjob($slurm); ## launch the slurm job (see subroutine below)
   }
 }
 
