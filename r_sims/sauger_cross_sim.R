@@ -121,8 +121,7 @@ rownames(all_inds) <- all_inds_names
 if (f0w_samp_prop!=1) {
 	f0w_to_remove <- sample((cross_inds+1):f0_inds, length((cross_inds+1):f0_inds)-(length((cross_inds+1):f0_inds)*f0w_samp_prop), replace=FALSE)
 	final_inds <- all_inds[-c(f0w_to_remove),]
-}
-else if (f0w_samp_prop==1) { final_inds <- all_inds }
+} else if (f0w_samp_prop==1) { final_inds <- all_inds }
 
 
 ## sequoia
