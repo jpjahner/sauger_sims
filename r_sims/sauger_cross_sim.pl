@@ -34,8 +34,8 @@ unless(-e '${trial}'){
 ## nloci
 my @nloci = ('100', '500', '1000', '5000', '10000');
 
-## proportion of f0 wild individuals sampled
-my @f0w_samp_prop = ('0', '0.2', '0.4', '0.6', '0.8', '1');
+## proportion of wild individuals sampled
+my @wild_samp_prop = ('0.2', '0.4', '0.6', '0.8', '1');
 
 
 ################################################
@@ -43,7 +43,7 @@ my @f0w_samp_prop = ('0', '0.2', '0.4', '0.6', '0.8', '1');
 ################################################
 
 foreach my $loci (@nloci){
-  foreach my $samp (@f0w_samp_prop){
+  foreach my $samp (@wild_samp_prop){
     my @slurmdirectives = "#!/bin/bash";
     push @slurmdirectives, "#SBATCH --job-name=rsim";
     push @slurmdirectives, "#SBATCH --nodes=1";
