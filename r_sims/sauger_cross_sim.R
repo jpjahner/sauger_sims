@@ -22,22 +22,29 @@ f1w_inds <- 500      ## total number of inds in F1 wild matrix
 f2_inds <- 1000       ## total number of inds in F2 matrix
 
 
+## set up matrix of true parent ids
+all_parents_full <- matrix(NA, (f0_inds+f1h_inds+f1w_inds+f2_inds), 3)
 
-## set up f0 matrix (NOTE!!!: this matrix is transposed relative to the others)
+
+## set up f0 genotype matrix (NOTE!!!: this matrix is transposed relative to the others) and add to true parent ids matrix
 f0_mat <- matrix(NA, nloci, f0_inds)
 for (i in 1:nloci) {
 	freq <- rbeta(1, 0.48, 0.206)  ## beta estimates come from fit to empirical data
 	for (j in 1:f0_inds) {
 		f0_mat[i,j] <- sum(rbinom(2, 1, freq))
+		all_parents_full[j,1] <- paste0("f0_", j)
 	}
 }
 
 
-## set up f1 hatchery matrix
+## set up f1 hatchery matrix and add to true parent ids matrix
 cross_inds <- floor(f0_cross_prop * f0_inds)
 f1h_parents <- matrix(NA, f1h_inds, 2)
 for (k in 1:f1h_inds) {
 	f1h_parents[k,] <- sample(1:cross_inds, 2, replace=FALSE)
+	all_parents_full[(k+f0_inds),1] <- paste0("f1h_", k)
+	all_parents_full[(k+f0_inds),2] <- paste0("f0_", f1h_parents[k,1])
+	all_parents_full[(k+f0_inds),3] <- paste0("f0_", f1h_parents[k,2])
 }
 
 f1h_mat <- matrix(NA, f1h_inds, nloci)
@@ -56,10 +63,13 @@ for (l in 1:f1h_inds) {
 }
 
 
-## set up f1 wild matrix
+## set up f1 wild matrix and add to true parent ids matrix
 f1w_parents <- matrix(NA, f1w_inds, 2)
 for (n in 1:f1w_inds) {
 	f1w_parents[n,] <- sample((cross_inds+1):f0_inds, 2, replace=FALSE)
+	all_parents_full[(n+f0_inds+f1h_inds),1] <- paste0("f1w_", n)
+	all_parents_full[(n+f0_inds+f1h_inds),2] <- paste0("f0_", f1w_parents[n,1])
+	all_parents_full[(n+f0_inds+f1h_inds),3] <- paste0("f0_", f1w_parents[n,2])
 }
 
 f1w_mat <- matrix(NA, f1w_inds, nloci)
@@ -82,10 +92,15 @@ for (o in 1:f1w_inds) {
 f1_joined <- rbind(f1h_mat, f1w_mat)
 
 
-## set up the f2 matrix
+## set up the f2 matrix and add to true parent ids matrix
 f2_parents <- matrix(NA, f2_inds, 2)
 for (q in 1:f2_inds) {
 	f2_parents[q,] <- sample(1:dim(f1_joined)[1], 2, replace=FALSE)
+	all_parents_full[(q+f0_inds+f1h_inds+f1w_inds),1] <- paste0("f2_", q)
+	if (f2_parents[q,1] > f1h_inds) { all_parents_full[(q+f0_inds+f1h_inds+f1w_inds),2] <- paste0("f1w_", f2_parents[q,1]-f1h_inds) }
+	else                            { all_parents_full[(q+f0_inds+f1h_inds+f1w_inds),2] <- paste0("f1h_", f2_parents[q,1]) }
+	if (f2_parents[q,2] > f1h_inds) { all_parents_full[(q+f0_inds+f1h_inds+f1w_inds),3] <- paste0("f1w_", f2_parents[q,2]-f1h_inds) }
+	else                            { all_parents_full[(q+f0_inds+f1h_inds+f1w_inds),3] <- paste0("f1h_", f2_parents[q,2]) }
 }
 
 f2_mat <- matrix(NA, f2_inds, nloci)
@@ -121,7 +136,11 @@ rownames(all_inds) <- all_inds_names
 if (wild_samp!=1) {
 	wild_to_remove <- sample((cross_inds+1):dim(all_inds)[1], length((cross_inds+1):dim(all_inds)[1])-(length((cross_inds+1):dim(all_inds)[1])*wild_samp), replace=FALSE)
 	final_inds <- all_inds[-c(wild_to_remove),]
-} else if (wild_samp==1) { final_inds <- all_inds }
+	final_parents <- all_parents_full[-c(wild_to_remove),]
+} else if (wild_samp==1) {
+	final_inds <- all_inds
+	final_parents <- all_parents_full
+}
 
 
 ## sequoia
@@ -132,9 +151,7 @@ output <- GetMaybeRel(final_inds)
 ## write out files
 write.table(output$MaybeTrio, file=paste0("trios_", nloci, "_", wild_samp, ".txt"), row.names=F, quote=F)
 write.table(output$MaybePar, file=paste0("pars_", nloci, "_", wild_samp, ".txt"), row.names=F, quote=F)
-write.table(f1h_parents, file=paste0("f1h_parents_", nloci, "_", wild_samp, ".txt"), row.names=F, col.names=F, quote=F)
-write.table(f1w_parents, file=paste0("f1w_parents_", nloci, "_", wild_samp, ".txt"), row.names=F, col.names=F, quote=F)
-write.table(f2_parents, file=paste0("f2_parents_", nloci, "_", wild_samp, ".txt"), row.names=F, col.names=F, quote=F)
+write.table(final_parents, file=paste0("true_parents_", nloci, "_", wild_samp, ".txt"), row.names=F, col.names=F, quote=F)
 
 
 
