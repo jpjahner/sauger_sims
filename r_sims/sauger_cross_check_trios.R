@@ -15,7 +15,7 @@ colnames(out_trios) <- wild_samp
 for (g in 1:length(nloci)) {
 	for (h in 1:length(wild_samp)) {
 		## read in true parent ids
-		true_parents <- read.delim(paste0("true_parents_", nloci, "_", wild_samp, ".txt"), header=FALSE)
+		true_parents <- read.delim(paste0("true_parents_", nloci, "_", wild_samp, ".txt"), header=FALSE, sep=" ")
 		## read in inferred relationships by sequoia and check accuracy
 		trios <- read.delim(paste0("trios_", nloci[g], "_", wild_samp[h], ".txt"), header=TRUE, sep=" ")
 		right_count <- 0
