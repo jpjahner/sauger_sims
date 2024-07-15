@@ -51,7 +51,7 @@ for (g in 1:length(nloci)) {
 	}
 }
 
-write.table(out_pars, file="tpfp_pars.txt", col.names=FALSE, quote=FALSE)
+write.table(out_pars, file="tpfp_pars.txt", row.names=FALSE, quote=FALSE)
 
 
 
