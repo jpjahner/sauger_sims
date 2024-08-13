@@ -17,7 +17,7 @@ beta_fit <- Beta.2p.fit(freqs[,5])
 ## plot SFS histogram with fitted beta
 pdf("unfolded_0.5_0.01_nosex_hwe001.pdf", height=5, width=5)
 par(mar=c(5,5,1,1))
-hist(freqs[,5], breaks=100, xlab="Allele frequency", ylab="Number of loci", main="", cex.axis=1.25, cex.lab=1.5); box(lwd=1.5)
+hist(freqs[,5], breaks=100, xlab="Allele frequency", ylab="Number of loci", main="", cex.axis=1.25, cex.lab=1.5, las=1); box(lwd=1.5)
 par(new=TRUE)
 dbeta_seq_x <- seq(beta_fit$l, beta_fit$u, length=100)
 dbeta_seq_y <- dBeta.4P(seq(beta_fit$l, beta_fit$u, length=100), beta_fit$l, beta_fit$u, beta_fit$alpha, beta_fit$beta)
