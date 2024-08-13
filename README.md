@@ -9,7 +9,24 @@ Contact: Josh Jahner, jpjahner@gmail.com
 
 This work was performed in [empirical](empirical/)
 
-### all individuals
+### all individuals with HWE filter (ACTUALLY USED)
+NOTE: tested with --hwe of 0.05, 0.01, and 0.001
+```{bash}
+module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
+vcftools --vcf sauger_0.5_0.01_nosex_filt.vcf --freq2 --hwe 0.001 --out afreqs_0.5_0.01_nosex_hwe001
+    ## After filtering, kept 576 out of 576 Individuals
+    ## After filtering, kept 7474 out of a possible 12045 Sites (--hwe 0.05)
+    ## After filtering, kept 8174 out of a possible 12045 Sites (--hwe 0.01)
+    ## After filtering, kept 8797 out of a possible 12045 Sites (--hwe 0.001)
+
+grep -v "CHROM" afreqs_0.5_0.01_nosex_hwe001.frq > afreqs_0.5_0.01_nosex_hwe001_noHead.frq    ## removes header
+module load r/4.4.0
+Rscript empirical_beta_fit.R    ## change input/output file each time
+Rscript unfolded_beta_fit.R    ## change input/output file each time
+```
+
+
+### all individuals (EXPLORATORY)
 ```{bash}
 module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
 vcftools --vcf sauger_0.5_0.01_nosex_filt.vcf --freq2 --out afreqs_0.5_0.01_nosex
@@ -21,7 +38,7 @@ module load r/4.4.0
 Rscript empirical_beta_fit.R    ## change input/output file each time
 ```
 
-### only the downstream individuals
+### only the downstream individuals (EXPLORATORY)
 ```{bash}
 grep "Bighorn" sauger_emu_meta_groups.csv | cut -f 1 -d "," > downstream_inds.txt
 
@@ -35,7 +52,7 @@ module load r/4.4.0
 Rscript empirical_beta_fit.R    ## change input/output file each time
 ```
 
-### only the upstream individuals
+### only the upstream individuals (EXPLORATORY)
 ```{bash}
 grep "Wind\|Boysen" sauger_emu_meta_groups.csv | cut -f 1 -d "," > upstream_inds.txt
 
@@ -49,7 +66,7 @@ module load r/4.4.0
 Rscript empirical_beta_fit.R    ## change input/output file each time
 ```
 
-### only Wind River individuals
+### only Wind River individuals (EXPLORATORY)
 ```{bash}
 grep "Wind" sauger_emu_meta_groups.csv | cut -f 1 -d "," > wind_inds.txt
 
@@ -63,7 +80,7 @@ module load r/4.4.0
 Rscript empirical_beta_fit.R    ## change input/output file each time
 ```
 
-### only Boysen individuals
+### only Boysen individuals (EXPLORATORY)
 ```{bash}
 grep "Boysen" sauger_emu_meta_groups.csv | cut -f 1 -d "," > boysen_inds.txt
 
@@ -77,21 +94,15 @@ module load r/4.4.0
 Rscript empirical_beta_fit.R    ## change input/output file each time
 ```
 
-### all individuals with HWE filter
-NOTE: tested with --hwe of 0.05, 0.01, and 0.001
+
+## Create conceptual figure
+
+This work was performed in [conceptual](conceptual/)
+
 ```{bash}
-module load arcc/1.0 gcc/12.2.0 vcftools/0.1.16
-vcftools --vcf sauger_0.5_0.01_nosex_filt.vcf --freq2 --hwe 0.001 --out afreqs_0.5_0.01_nosex_hwe001
-    ## After filtering, kept 576 out of 576 Individuals
-    ## After filtering, kept 7474 out of a possible 12045 Sites (--hwe 0.05)
-    ## After filtering, kept 8174 out of a possible 12045 Sites (--hwe 0.01)
-    ## After filtering, kept 8797 out of a possible 12045 Sites (--hwe 0.001)
-
-grep -v "CHROM" afreqs_0.5_0.01_nosex_hwe001.frq > afreqs_0.5_0.01_nosex_hwe001_noHead.frq    ## removes header
-module load r/4.4.0
-Rscript empirical_beta_fit.R    ## change input/output file each time
+Rscript conceptual fig.R
+## NOTE: Panel A flow chart was later added using affinity designer
 ```
-
 
 
 ## R simulations
